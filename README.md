@@ -239,8 +239,5 @@ Repository
 
 GitHub: sm2021praktikum/roman-numerals-converter
 
-Author
-
-Sumathi
 
 Built as a hands-on AWS / DevOps learning project.
