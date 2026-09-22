@@ -35,6 +35,26 @@ Resources:
       KeyName: !Ref KeyPairName
       SecurityGroupIds:
         - !GetAtt WebServerSecurityGroup.GroupId
+
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          dnf update -y
+          dnf install -y git python3-pip
+
+          cd /home/ec2-user
+          git clone https://github.com/sm2021praktikum/roman-numerals-converter.git
+
+          cd roman-numerals-converter
+          pip3 install flask
+
+          nohup python3 app.py > /var/log/roman-app.log 2>&1 &
+
       Tags:
         - Key: Name
           Value: !Sub "Web Server of ${AWS::StackName}"
+
+Outputs:
+  WebsiteURL:
+    Description: Roman Numerals Converter Website
+    Value: !Sub "http://${WebServer.PublicIp}"
